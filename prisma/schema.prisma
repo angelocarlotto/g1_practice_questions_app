@@ -73,3 +73,42 @@ model test_names{
     description String
     test_name test_name[]
 }
+
+
+
+model answer {
+	id  Int     @id @default(autoincrement())
+	text String
+	orderindex Int
+}
+
+
+model question {
+	id  Int     @id @default(autoincrement())
+	description String
+	explanation String
+	hint String
+	imagename String
+	correctanswer Int
+	mediaposition Int
+	question_answer question_answer[]
+}
+
+
+
+model question_answer {
+	q_id Int
+	a_id Int
+	answer          answer          @relation(fields: [a_id], references: [id])
+	question    question    @relation(fields: [q_id], references: [id])
+	@@id(name: "test_name3Id", [q_id, a_id])
+	
+}
+
+model test_question {
+	t_id Int
+	q_id Int
+	question       question          @relation(fields: [q_id], references: [id])
+	test           test    @relation(fields: [t_id], references: [id])
+	@@id(name: "test_nameI2d", [t_id, q_id])
+}
