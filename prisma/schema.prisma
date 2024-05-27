@@ -8,7 +8,7 @@
 
 generator client {
   provider = "prisma-client-js"
-   previewFeatures = ["relationJoins"]
+   //previewFeatures = ["driverAdapters","relationJoins"]
   //output   = "./generated/client"
   // provider = "postgresql"
   //url = env("POSTGRES_PRISMA_URL") // uses connection pooling
@@ -17,19 +17,20 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_URL")
+ // provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 
 model step{
   id Int     @id @default(autoincrement())
-  subdivisionId Int
-  categoryId Int
+  subdivisionid Int
+  categoryid Int
   num Int
   title String
-  shortTitle String
-  titlePart1 String
-  titlePart2 String
+  shorttitle String
+  titlepart1 String
+  titlepart2 String
   description String
   tests test[]
 }
@@ -38,17 +39,17 @@ model step{
 model test {
   id                  Int     @id @default(autoincrement())
   type                Int
-  allowedMistakes     Int
-  numberOfQuestions   Int
-  questionPhrase      String
-  ageToApply          String
-  orderIndex          Int
-  endorsementCode     String
-  stepId              Int
-  premiumOnly         Int
-  fullDescription     String
+  allowedmistakes     Int
+  numberofquestions   Int
+  questionphrase      String
+  agetoapply          String
+  orderindex          Int
+  endorsementcode     String
+  stepid              Int
+  premiumonly         Int
+  fulldescription     String
   cover               String
-  step                step   @relation(fields: [stepId], references: [id])
+  step                step   @relation(fields: [stepid], references: [id])
   test_name   test_name[]
 }
 
@@ -68,7 +69,7 @@ model test_names{
 
     id Int     @id @default(autoincrement())
     title String
-    shortTitle String
+    shorttitle String
     description String
     test_name test_name[]
 }
