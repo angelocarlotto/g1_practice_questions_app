@@ -3,8 +3,8 @@ import Provider from "@components/Provider";
 import "@styles/globals.css";
 
 export const metadata = {
-  title: "Promptopia",
-  description: "Discover and share AI props",
+  title: "100% Free - G1 Practice Exam",
+  description: "Discover how good you are to actually do the G1 Exam on Ontario",
 };
 
 const RootLayout = ({ children }) => {
