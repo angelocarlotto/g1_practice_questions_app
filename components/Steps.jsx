@@ -35,12 +35,12 @@ const Steps = () => {
     <>
       {allPosts.map((step) => (
         <section className="feed" key={step.id}>
-          <strong>{step.shortTitle}</strong>
+          <strong>{step.shorttitle}</strong>
           <TestCardList
             key={step.id}
             data={step.tests.sort((a, b) => {
-              if (a.orderIndex < b.orderIndex) return -1;
-              else if (a.orderIndex > b.orderIndex) return 1;
+              if (a.orderindex < b.orderindex) return -1;
+              else if (a.orderindex > b.orderindex) return 1;
               return 0;
             })}
             handleCardClick={handleCardClickV2}

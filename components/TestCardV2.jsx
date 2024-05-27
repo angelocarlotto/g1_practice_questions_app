@@ -26,14 +26,14 @@ const TestCardV2 = ({ testAux, handleCardClick}) => {
               {testAux.test_name && testAux.test_name[0].test_names?.title}
             </h3>
             <p className='font-inter text-sm text-gray-500'>
-              {testAux.questionPhrase}
+              {testAux.questionphrase}
             </p>
           </div>
         </div>
 
       </div>
       {testAux.title}
-      <p className='my-4 font-satoshi text-sm text-gray-700'>{testAux.fullDescription}</p>
+      <p className='my-4 font-satoshi text-sm text-gray-700'>{testAux.fulldescription}</p>
 
     </div>
     

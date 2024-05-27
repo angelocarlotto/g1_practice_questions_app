@@ -24,14 +24,14 @@ const TestCard = ({ post: stepAux, handleCardClick, handleDelete, handleTagClick
               {stepAux.test_name[0].test_names.title}
             </h3>
             <p className='font-inter text-sm text-gray-500'>
-              {stepAux.questionPhrase}
+              {stepAux.questiondhrase}
             </p>
           </div>
         </div>
 
       </div>
       {stepAux.test_name[0].test_names.title}
-      <p className='my-4 font-satoshi text-sm text-gray-700'>{stepAux.questionPhrase}</p>
+      <p className='my-4 font-satoshi text-sm text-gray-700'>{stepAux.questionphrase}</p>
 
     </div>
     
