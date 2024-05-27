@@ -1,0 +1,10 @@
+LOAD DATABASE
+  FROM sqlite:///tests_US.db
+  INTO postgresql://default:e1zdkf8DYCtx@ep-floral-leaf-a478mat8.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&host=ep-floral-leaf-a478mat8
+
+WITH include drop, create tables, create indexes
+
+SET
+  work_mem to '16MB',
+  maintenance_work_mem to '64MB'
+;

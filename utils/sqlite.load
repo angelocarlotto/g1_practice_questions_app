@@ -1,0 +1,10 @@
+LOAD DATABASE
+  FROM sqlite:///tests_US.db
+  INTO postgresql://postgres:123456@localhost:5432/verceldb
+
+WITH include drop, create tables, create indexes
+
+SET
+  work_mem to '16MB',
+  maintenance_work_mem to '64MB'
+;
