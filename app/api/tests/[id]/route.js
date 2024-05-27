@@ -1,7 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 export const GET = async (req, { params }) => {
   try {
-    const prisma = new PrismaClient();
+    const prisma = new PrismaClient({
+      log: ['query', 'info', 'warn', 'error'],
+    });
     const id = parseInt(params.id);
     const prompts = await prisma.test.findUnique({
       include: {
