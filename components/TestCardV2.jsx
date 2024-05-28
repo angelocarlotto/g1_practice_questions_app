@@ -22,7 +22,7 @@ const handleStartClick=(e)=>{
           <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
             <div className="flex flex-col">
               <h3 className="font-satoshi font-semibold text-gray-900">
-                {testAux.test_name && testAux.test_name[0].test_names?.title}
+                {testAux.test_name && testAux.title}
               </h3>
               <p className="font-inter text-sm text-gray-500">
                 {testAux.questionphrase}

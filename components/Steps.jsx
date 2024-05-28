@@ -19,7 +19,7 @@ const Steps = () => {
   const router = useRouter();
 
   const handleCardClickV2 = async (test) => {
-    router.push(`/tests/${test.t_id}`);
+    router.push(`/tests/${test.id}`);
   };
   const fetchPost = async () => {
     const response = await fetch("/api/steps", { cache: "no-store" });

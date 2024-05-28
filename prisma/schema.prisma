@@ -37,18 +37,12 @@ model test {
   fulldescription   String
   cover             String
   step              step            @relation(fields: [stepid], references: [id])
-  test_name         test_name[]
   test_question     test_question[]
+  title       String
+  shorttitle  String
+  description String
 }
 
-model test_name {
-  t_id       Int
-  n_id       Int
-  test       test       @relation(fields: [t_id], references: [id])
-  test_names test_names @relation(fields: [n_id], references: [id])
-
-  @@id(name: "test_nameId", [t_id, n_id])
-}
 
 model test_question {
   t_id     Int
@@ -57,14 +51,6 @@ model test_question {
   test     test     @relation(fields: [t_id], references: [id])
 
   @@id(name: "test_nameI2d", [t_id, q_id])
-}
-
-model test_names {
-  id          Int         @id @default(autoincrement())
-  title       String
-  shorttitle  String
-  description String
-  test_name   test_name[]
 }
 
 model answer {

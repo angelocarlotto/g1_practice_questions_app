@@ -7,7 +7,6 @@ export const GET = async (req, res) => {
     });
 
     const allSteps = await prisma.test.findMany({
-      include: { test_name: { include: { test_names: true } } },
       orderBy: {
         orderindex: "asc",
       },

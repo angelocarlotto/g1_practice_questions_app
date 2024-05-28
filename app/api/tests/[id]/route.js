@@ -6,9 +6,6 @@ export const GET = async (req, { params }) => {
     });
     const id = parseInt(params.id);
     const prompts = await prisma.test.findUnique({
-      include: {
-        test_name: { include: { test_names: true } },
-      },
       where: {
         id: id,
       },

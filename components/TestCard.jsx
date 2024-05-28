@@ -12,7 +12,7 @@ const TestCard = ({ post: stepAux, handleCardClick, handleDelete, handleTagClick
 
 
   return (
-    <div className='prompt_card'  onClick={()=>handleCardClick & handleCardClick(stepAux.test_name[0])}>
+    <div className='prompt_card'  onClick={()=>handleCardClick & handleCardClick(stepAux)}>
       <div className='flex justify-between items-start gap-5'>
         <div
           className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
@@ -21,7 +21,7 @@ const TestCard = ({ post: stepAux, handleCardClick, handleDelete, handleTagClick
 
           <div className='flex flex-col'>
             <h3 className='font-satoshi font-semibold text-gray-900'>
-              {stepAux.test_name[0].test_names.title}
+              {stepAux.title}
             </h3>
             <p className='font-inter text-sm text-gray-500'>
               {stepAux.questiondhrase}
@@ -30,7 +30,7 @@ const TestCard = ({ post: stepAux, handleCardClick, handleDelete, handleTagClick
         </div>
 
       </div>
-      {stepAux.test_name[0].test_names.title}
+      {stepAux.title}
       <p className='my-4 font-satoshi text-sm text-gray-700'>{stepAux.questionphrase}</p>
 
     </div>

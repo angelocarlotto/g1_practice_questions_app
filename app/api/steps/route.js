@@ -8,9 +8,7 @@ export const GET = async (req, res) => {
 
     const allSteps = await prisma.step.findMany({
       include: {
-        tests: {
-          include: { test_name: { include: { test_names: true } } },
-        },
+        tests: true,
       },
       orderBy: {
         num: "asc",
