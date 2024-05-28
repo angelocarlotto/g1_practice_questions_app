@@ -1,114 +1,96 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 //npx prisma generate 
 
 generator client {
   provider = "prisma-client-js"
-   //previewFeatures = ["driverAdapters","relationJoins"]
-  //output   = "./generated/client"
-  // provider = "postgresql"
-  //url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  //directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 datasource db {
   provider = "postgresql"
- // provider = "sqlite"
+  // provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
-
-model step{
-  id Int     @id @default(autoincrement())
+model step {
+  id            Int    @id @default(autoincrement())
   subdivisionid Int
-  categoryid Int
-  num Int
-  title String
-  shorttitle String
-  titlepart1 String
-  titlepart2 String
-  description String
-  tests test[]
+  categoryid    Int
+  num           Int
+  title         String
+  shorttitle    String
+  titlepart1    String
+  titlepart2    String
+  description   String
+  tests         test[]
 }
-
 
 model test {
-  id                  Int     @id @default(autoincrement())
-  type                Int
-  allowedmistakes     Int
-  numberofquestions   Int
-  questionphrase      String
-  agetoapply          String
-  orderindex          Int
-  endorsementcode     String
-  stepid              Int
-  premiumonly         Int
-  fulldescription     String
-  cover               String
-  step                step   @relation(fields: [stepid], references: [id])
-  test_name   test_name[]
+  id                Int             @id @default(autoincrement())
+  type              Int
+  allowedmistakes   Int
+  numberofquestions Int
+  questionphrase    String
+  agetoapply        String
+  orderindex        Int
+  endorsementcode   String
+  stepid            Int
+  premiumonly       Int
+  fulldescription   String
+  cover             String
+  step              step            @relation(fields: [stepid], references: [id])
+  test_name         test_name[]
+  test_question     test_question[]
 }
 
+model test_name {
+  t_id       Int
+  n_id       Int
+  test       test       @relation(fields: [t_id], references: [id])
+  test_names test_names @relation(fields: [n_id], references: [id])
 
-
-
-model test_name{
-t_id Int
-n_id Int
-test          test          @relation(fields: [t_id], references: [id])
-test_names    test_names    @relation(fields: [n_id], references: [id])
-@@id(name: "test_nameId", [t_id, n_id])
-}
-
-
-model test_names{
-
-    id Int     @id @default(autoincrement())
-    title String
-    shorttitle String
-    description String
-    test_name test_name[]
-}
-
-
-
-model answer {
-	id  Int     @id @default(autoincrement())
-	text String
-	orderindex Int
-}
-
-
-model question {
-	id  Int     @id @default(autoincrement())
-	description String
-	explanation String
-	hint String
-	imagename String
-	correctanswer Int
-	mediaposition Int
-	question_answer question_answer[]
-}
-
-
-
-model question_answer {
-	q_id Int
-	a_id Int
-	answer          answer          @relation(fields: [a_id], references: [id])
-	question    question    @relation(fields: [q_id], references: [id])
-	@@id(name: "test_name3Id", [q_id, a_id])
-	
+  @@id(name: "test_nameId", [t_id, n_id])
 }
 
 model test_question {
-	t_id Int
-	q_id Int
-	question       question          @relation(fields: [q_id], references: [id])
-	test           test    @relation(fields: [t_id], references: [id])
-	@@id(name: "test_nameI2d", [t_id, q_id])
+  t_id     Int
+  q_id     Int
+  question question @relation(fields: [q_id], references: [id])
+  test     test     @relation(fields: [t_id], references: [id])
+
+  @@id(name: "test_nameI2d", [t_id, q_id])
+}
+
+model test_names {
+  id          Int         @id @default(autoincrement())
+  title       String
+  shorttitle  String
+  description String
+  test_name   test_name[]
+}
+
+model answer {
+  id              Int               @id @default(autoincrement())
+  text            String
+  orderindex      Int
+  question_answer question_answer[]
+}
+
+model question {
+  id              Int               @id @default(autoincrement())
+  description     String
+  explanation     String
+  hint            String
+  imagename       String
+  correctanswer   Int
+  mediaposition   Int
+  question_answer question_answer[]
+  test_question   test_question[]
+}
+
+model question_answer {
+  q_id     Int
+  a_id     Int
+  answer   answer   @relation(fields: [a_id], references: [id])
+  question question @relation(fields: [q_id], references: [id])
+
+  @@id(name: "test_name3Id", [q_id, a_id])
 }
