@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import Image from "next/image";
 const Home = () => {
   const [allSteps, setAllPosts] = useState([]);
   const router = useRouter();
@@ -49,6 +49,14 @@ const Home = () => {
                   >
                     <div>
                       <h3>{test.title}</h3>
+                      <Image
+                        src={
+                          "/assets/images/images/" +
+                          test.cover.replace(".jpg", "_Normal.png")
+                        }
+                        width="400"
+                        height="200"
+                      ></Image>
                     </div>
                     <p>{test.questionphrase}</p>
                   </div>
