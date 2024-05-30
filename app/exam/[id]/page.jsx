@@ -25,7 +25,7 @@ const TestQuestions = ({ params, searchParams }) => {
             <div>
               {question.imagename && (
                 <Image
-                key={"image"+question.id+ans.answer.id}
+                key={"image"+question.id}
                   src={"/assets/images/images/" + question.imagename.replace(".png", "_Normal.png").replace(".jpg","_Normal.png") }
                   width="400"
                   height="200"
