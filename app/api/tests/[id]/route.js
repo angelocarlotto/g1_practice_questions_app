@@ -2,10 +2,19 @@ import { PrismaClient } from "@prisma/client";
 export const GET = async (req, { params }) => {
   try {
     const prisma = new PrismaClient({
-      log: ['query', 'info', 'warn', 'error'],
+      log: ["query", "info", "warn", "error"],
     });
     const id = parseInt(params.id);
     const prompts = await prisma.test.findUnique({
+      include: {
+        test_question: {
+          include: {
+            question: {
+              include: { question_answer: { include: { answer: true } } },
+            },
+          },
+        },
+      },
       where: {
         id: id,
       },
