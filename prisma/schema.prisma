@@ -47,7 +47,7 @@ model test {
 model test_question {
   t_id     Int
   q_id     Int
-  question question @relation(fields: [q_id], references: [id])
+  question question? @relation(fields: [q_id], references: [id])
   test     test     @relation(fields: [t_id], references: [id])
 
   @@id(name: "test_nameI2d", [t_id, q_id])

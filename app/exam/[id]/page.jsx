@@ -18,7 +18,7 @@ const TestQuestions = ({ params, searchParams }) => {
 
   return (
     <>
-      {test.test_question?.map((element) => {
+      {test.test_question?.filter(e=>e.question!=null).map((element) => {
         const question = element.question;
         const answers = question.question_answer;
         return (
