@@ -35,7 +35,7 @@ const TestQuestions = ({ params, searchParams }) => {
               <br/>
               <ol>
                 {answers?.map((ans) => (
-                  <li><input type="radio" name={"question"+question.id} id={"answer"+ans.answer.id} value={ans.answer.id}/> <label for={"answer"+ans.answer.id}> {ans.answer.text}</label></li>
+                  <li><input type="radio" name={"question"+question.id} id={"answer"+question.id+ans.answer.id} value={ans.answer.id}/> <label for={"answer"+question.id+ans.answer.id}> {ans.answer.text}</label></li>
                 ))}
               </ol>
             </div>
