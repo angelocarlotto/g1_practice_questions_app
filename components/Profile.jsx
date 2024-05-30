@@ -1,4 +1,3 @@
-import TestCard from "./TestCard";
 
 const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
   return (
