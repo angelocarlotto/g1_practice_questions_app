@@ -52,7 +52,7 @@ const Home = () => {
                       <Image
                         src={
                           "/assets/images/images/" +
-                          test.cover.replace(".jpg", "_Normal.png")
+                          test.cover.replace(".png", "_Normal.png").replace(".jpg", "_Normal.png")
                         }
                         width="400"
                         height="200"

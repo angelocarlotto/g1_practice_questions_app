@@ -9,7 +9,6 @@ const TestQuestions = ({ params, searchParams }) => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/tests/${testId}`);
       const data = await response.json();
-      console.log(data);
       setTest(data);
     };
 
@@ -26,9 +25,11 @@ const TestQuestions = ({ params, searchParams }) => {
             <div>
               {question.imagename && (
                 <Image
-                  src={"/assets/images/images/" + question.imagename.replace(".jpg","_Normal.png") }
+                key={"image"+question.id+ans.answer.id}
+                  src={"/assets/images/images/" + question.imagename.replace(".png", "_Normal.png").replace(".jpg","_Normal.png") }
                   width="400"
                   height="200"
+                  alt="image"
                 ></Image>
               )}
               <p>{question.description}</p>
