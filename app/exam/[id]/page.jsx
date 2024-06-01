@@ -1,77 +1,59 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import Question from "../../../components/Question";
+
 const TestQuestions = ({ params, searchParams }) => {
   const testId = params.id;
   const [test, setTest] = useState({});
+  const [questions, setQuestions] = useState([]);
 
-  const handleRadioClick = (e, answer, question) => {
-    
-    if(answer.a_id==question.correctanswer){
-      e.target.after("Right")
-    }else{
-      e.target.after("Wrong")
-    }
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState({});
+
+  const handleNextButtonClick = () => {
+    const nextIndex = (currentQuestionIndex + 1) % questions.length;
+    setCurrentQuestionIndex(nextIndex);
+    setCurrentQuestion(questions[nextIndex]);
   };
+
+  const handlePreviousButtonClick = () => {
+    const nextIndex =
+      currentQuestionIndex === 0 ? questions.length - 1 : currentQuestionIndex - 1;
+    setCurrentQuestionIndex(nextIndex);
+    setCurrentQuestion(questions[nextIndex]);
+  };
+
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/tests/${testId}`);
       const data = await response.json();
       setTest(data);
+      setQuestions(data.test_question.filter((e) => e.question != null).map((e)=>e.question));
+      console.log(data.test_question.filter((e) => e.question != null).map((e)=>e.question)[currentQuestionIndex])
+      setCurrentQuestion(data.test_question.filter((e) => e.question != null).map((e)=>e.question)[currentQuestionIndex]);
     };
 
     fetchPosts();
   }, []);
-
   return (
     <>
-      {test.test_question
-        ?.filter((e) => e.question != null)
-        .map((element) => {
-          const question = element.question;
-          const answers = question.question_answer;
-          return (
-            <div className="prompt_card">
-              <div>
-                {question.imagename && (
-                  <Image
-                    key={"image" + question.id}
-                    src={
-                      "/assets/images/images/" +
-                      question.imagename
-                        .replace(".png", "_Normal.png")
-                        .replace(".jpg", "_Normal.png")
-                    }
-                    width="400"
-                    height="200"
-                    alt="image"
-                  ></Image>
-                )}
-                <p>{question.description}</p>
-                <br />
-                <ol>
-                  {answers?.map((ans) => (
-                    <li>
-                      <input
-                        type="radio"
-                        name={"question" + question.id}
-                        onClick={(e) => {
-                          handleRadioClick( e,ans, question);
-                        }}
-                        id={"answer" + question.id + ans.answer.id}
-                        value={ans.answer.id}
-                      />{" "}
-                      <label for={"answer" + question.id + ans.answer.id}>
-                        {" "}
-                        {ans.answer.text}
-                      </label>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-          );
-        })}
+      {currentQuestion && (
+        <Question key={currentQuestion.id} index={currentQuestionIndex} question={currentQuestion}  />
+      )}
+      <div className="navigation">
+        <button
+          disabled={currentQuestionIndex === 0}
+          onClick={handlePreviousButtonClick}
+        >
+          Previous |
+        </button>
+        <button
+          disabled={currentQuestionIndex === questions.length - 1}
+          onClick={handleNextButtonClick}
+        >
+          Next
+        </button>
+      </div>
     </>
   );
 };
