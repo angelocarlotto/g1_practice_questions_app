@@ -1,14 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+
+import Test from "@components/Test";
+
 const Home = () => {
   const [allSteps, setAllPosts] = useState([]);
-  const router = useRouter();
+  
 
-  const handleCardClickV2 = async (test) => {
-    router.push(`/tests/${test.id}`);
-  };
+  
   const fetchPost = async () => {
     const response = await fetch("/api/steps", { cache: "no-store" });
     const data = await response.json();
@@ -43,23 +42,7 @@ const Home = () => {
                   return 0;
                 })
                 .map((test) => (
-                  <div
-                    className="prompt_card"
-                    onClick={() => handleCardClickV2(test)}
-                  >
-                    <div>
-                      <h3>{test.title}</h3>
-                      <Image
-                        src={
-                          "/assets/images/images/" +
-                          test.cover.replace(".png", "_Normal.png").replace(".jpg", "_Normal.png")
-                        }
-                        width="400"
-                        height="200"
-                      ></Image>
-                    </div>
-                    <p>{test.questionphrase}</p>
-                  </div>
+                 <Test key={test.id} test={test} />
                 ))}
             </div>
           </section>

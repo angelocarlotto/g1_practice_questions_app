@@ -1,14 +1,12 @@
 "use client";
 import Image from "next/image";
-const Question = ({ index, question }) => {
-    const answers=question.question_answer;
-  const handleRadioClick = (e, answer, question) => {
-    if (answer.a_id == question.correctanswer) {
-      e.target.after("Right");
-    } else {
-      e.target.after("Wrong");
-    }
-  };
+import { useEffect, useState } from "react";
+const Question = ({ index, question, exam, handleRadioClick }) => {
+  const [answers, setAnswers] = useState([]);
+  useEffect(() => {
+    setAnswers(question.question_answer);
+    console.log(exam);
+  }, []);
   return (
     <div className="prompt_card">
       <div>
@@ -23,14 +21,17 @@ const Question = ({ index, question }) => {
             }
             width="400"
             height="200"
-            alt="image"
+            alt="something here"
           ></Image>
         )}
-        <p>{index+1} - {question.description}</p>
+        <p>
+          {index + 1}/{exam?.test_question?.length} -{" "}
+          <strong> {question.description}</strong>
+        </p>
         <br />
         <ol>
           {answers?.map((ans) => (
-            <li>
+            <li key={"li" + question.id + ans.answer.id}>
               <input
                 type="radio"
                 name={"question" + question.id}
@@ -40,7 +41,7 @@ const Question = ({ index, question }) => {
                 id={"answer" + question.id + ans.answer.id}
                 value={ans.answer.id}
               />{" "}
-              <label for={"answer" + question.id + ans.answer.id}>
+              <label htmlFor={"answer" + question.id + ans.answer.id}>
                 {" "}
                 {ans.answer.text}
               </label>
