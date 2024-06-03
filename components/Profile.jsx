@@ -8,7 +8,7 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
       <p className='desc text-left'>{desc}</p>
 
       <div className='mt-10 prompt_layout'>
-       
+       Here will be shown the user progress
       </div>
     </section>
   );

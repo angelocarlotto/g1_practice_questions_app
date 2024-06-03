@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Question from "@components/Question";
-
+import { CgSmileSad, CgSmile } from "react-icons/cg";
 const TestQuestions = ({ params, searchParams }) => {
   const testId = params.id;
   const [test, setTest] = useState({});
@@ -10,6 +10,7 @@ const TestQuestions = ({ params, searchParams }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState({});
 
+  const [questionsAnswered, setQuestionsAnswered] = useState({});
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [totalHits, setTotalHits] = useState(0);
   const [totalErrors, setTotalErrors] = useState(0);
@@ -30,6 +31,13 @@ const TestQuestions = ({ params, searchParams }) => {
   };
 
   const handleRadioClick = (e, answer, question) => {
+    
+    questionsAnswered[question.id] = {
+      result: answer.a_id == question.correctanswer,
+      selectedAnswerId:answer.a_id
+    };
+    setQuestionsAnswered(questionsAnswered);
+
     if (answer.a_id == question.correctanswer) {
       e.target.after("Right");
       setTotalHits(totalHits+1);
@@ -59,7 +67,9 @@ const TestQuestions = ({ params, searchParams }) => {
   return (
     <>
       <p>
-        Erros:{Math.round( (totalErrors/totalQuestions)*100,2)}% Hits:{Math.round((totalHits/totalQuestions)*100,2)}% Progress:{Math.round(((totalHits+totalErrors)/totalQuestions)*100,2)}%
+        Erros:{Math.round((totalErrors / totalQuestions) * 100, 2)}% Hits:
+        {Math.round((totalHits / totalQuestions) * 100, 2)}% Progress:
+        {Math.round(((totalHits + totalErrors) / totalQuestions) * 100, 2)}%
       </p>
       {currentQuestion && (
         <Question
@@ -68,6 +78,8 @@ const TestQuestions = ({ params, searchParams }) => {
           question={currentQuestion}
           exam={test}
           handleRadioClick={handleRadioClick}
+          isDisabled={questionsAnswered[currentQuestion.id]!=null}
+          selectedAnswerId={questionsAnswered[currentQuestion.id]==null?null:questionsAnswered[currentQuestion.id].selectedAnswerId}
         />
       )}
       <div className="navigation">

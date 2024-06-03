@@ -1,7 +1,15 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-const Question = ({ index, question, exam, handleRadioClick }) => {
+import { CgSmileSad, CgSmile } from "react-icons/cg";
+const Question = ({
+  index,
+  question,
+  exam,
+  handleRadioClick,
+  isDisabled = false,
+  selectedAnswerId = null,
+}) => {
   const [answers, setAnswers] = useState([]);
   useEffect(() => {
     setAnswers(question.question_answer);
@@ -33,6 +41,8 @@ const Question = ({ index, question, exam, handleRadioClick }) => {
           {answers?.map((ans) => (
             <li key={"li" + question.id + ans.answer.id}>
               <input
+                disabled={isDisabled}
+                defaultChecked={selectedAnswerId == ans.answer.id}
                 type="radio"
                 name={"question" + question.id}
                 onClick={(e) => {
@@ -42,7 +52,8 @@ const Question = ({ index, question, exam, handleRadioClick }) => {
                 value={ans.answer.id}
               />{" "}
               <label htmlFor={"answer" + question.id + ans.answer.id}>
-                {" "}
+
+
                 {ans.answer.text}
               </label>
             </li>
