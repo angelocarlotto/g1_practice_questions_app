@@ -13,8 +13,14 @@ module.exports = {
       },
       colors: {
         'primary-orange': '#FF5722',
+      },
+      height: {
+        screen: '100dvh'
       }
     },
+  },
+  corePlugins: {
+    preflight: true
   },
   plugins: [],
 }

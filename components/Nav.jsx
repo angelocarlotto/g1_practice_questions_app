@@ -18,7 +18,7 @@ const Nav = () => {
     })();
   }, []);
   return (
-    <nav className="flex-between w-full mb-16">
+    <nav className="justify-between w-full flex px-5 relative h-14 bg-[rgba(76,75,75,0.68)] items-center text-white">
       <Link href="/" className="flex gap-2 flex-center">
         <Image
           src="/assets/images/logo.svg"
@@ -26,7 +26,7 @@ const Nav = () => {
           width={30}
           height={30}
         />
-        <p className="logo_text">G1 Practice Exam</p>
+        <p className="logo_text ">G1 Practice Exam</p>
       </Link>
 
       {/* Mobile Devices */}

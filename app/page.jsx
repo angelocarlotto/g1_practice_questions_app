@@ -2,70 +2,36 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Sidebar from "@components/Sidebar";
+import TestList from "@components/TestList";
+
 const Home = () => {
   const [allSteps, setAllPosts] = useState([]);
-  const router = useRouter();
 
-  const handleCardClickV2 = async (test) => {
-    router.push(`/tests/${test.id}`);
-  };
+
   const fetchPost = async () => {
     const response = await fetch("/api/steps", { cache: "no-store" });
     const data = await response.json();
     setAllPosts(data);
   };
 
+  
   useEffect(() => {
     fetchPost();
+    // console.log(allSteps)
   }, []);
 
+
   return (
-    <section className="w-full flex-center flex-col">
-      <h1 className="head_text text-center">
-        G1
-        <br className="max-md:hidden" />
-        <span className="orange_gradient text-center">Practice Exam</span>
-      </h1>
-      <p className="desc text-center">
-        100% free plataform to practice your knowlege before the real G1 exame.
-      </p>
-
-      <>
-        {allSteps.map((step) => (
-          <section className="feed" key={step.id}>
-            <strong>{step.title}</strong>
-
-            <div>
-              {step.tests
-                .sort((a, b) => {
-                  if (a.orderindex < b.orderindex) return -1;
-                  else if (a.orderindex > b.orderindex) return 1;
-                  return 0;
-                })
-                .map((test) => (
-                  <div
-                    className="prompt_card"
-                    onClick={() => handleCardClickV2(test)}
-                  >
-                    <div>
-                      <h3>{test.title}</h3>
-                      <Image
-                        src={
-                          "/assets/images/images/" +
-                          test.cover.replace(".png", "_Normal.png").replace(".jpg", "_Normal.png")
-                        }
-                        width="400"
-                        height="200"
-                      ></Image>
-                    </div>
-                    <p>{test.questionphrase}</p>
-                  </div>
-                ))}
-            </div>
-          </section>
-        ))}
-      </>
-    </section>
+    <>
+      
+      {/* sidebar */}
+      {/* <Sidebar /> */}
+    
+      {/* children */}
+    
+        <TestList allSteps={allSteps} />
+    </>
   );
 };
 

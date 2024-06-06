@@ -23,17 +23,19 @@ const TestQuestions = ({ params, searchParams }) => {
     fetchPosts();
   }, []);
 
+
   return (
-    <>
+    <div className='my-3 flex flex-col gap-[3rem]'>
       {test.test_question
         ?.filter((e) => e.question != null)
         .map((element) => {
           const question = element.question;
           const answers = question.question_answer;
           return (
-            <div className="prompt_card">
-              <div>
-                {question.imagename && (
+            <div className="prompt_card w-[90%] mx-auto flex flex-col gap-2">
+                {question.imagename && <div className='relative w-full h-[200px]'>
+                  
+                 
                   <Image
                     key={"image" + question.id}
                     src={
@@ -42,13 +44,14 @@ const TestQuestions = ({ params, searchParams }) => {
                         .replace(".png", "_Normal.png")
                         .replace(".jpg", "_Normal.png")
                     }
-                    width="400"
-                    height="200"
+                    fill
+                    className='object-cover rounded-md'
                     alt="image"
-                  ></Image>
-                )}
+                  />
+                </div>
+                }
+              <div>
                 <p>{question.description}</p>
-                <br />
                 <ol>
                   {answers?.map((ans) => (
                     <li>
@@ -72,7 +75,7 @@ const TestQuestions = ({ params, searchParams }) => {
             </div>
           );
         })}
-    </>
+    </div>
   );
 };
 
