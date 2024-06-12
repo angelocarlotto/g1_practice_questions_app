@@ -26,7 +26,8 @@ const Home = () => {
         <span className="orange_gradient text-center">Practice Exam</span>
       </h1>
       <p className="desc text-center">
-        100% free plataform to practice your knowlege before the real G1 exame.
+        100% free platform to practice your knowledge before the real G1 exam.
+        Are you willing to take the G1 or M1 Exam? This is the place for you to practice before succeed. Take the practice exams as many times as you need nd watch your progress throughout the attempts. And all of this is completely Free: So, Enjoy.
       </p>
 
       <>

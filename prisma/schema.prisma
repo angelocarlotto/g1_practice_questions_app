@@ -63,13 +63,14 @@ model answer {
 model question {
   id              Int               @id @default(autoincrement())
   description     String
-  explanation     String
+  explanation     String?
   hint            String
-  imagename       String
-  correctanswer   Int
+  imagename       String?
+  //correctanswer   Int
   mediaposition   Int
   question_answer question_answer[]
   test_question   test_question[]
+  correctanswerjson   Json
 }
 
 model question_answer {

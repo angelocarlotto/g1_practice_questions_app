@@ -9,6 +9,7 @@ const TestQuestions = ({ params, searchParams }) => {
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState({});
+  const [nextButtonEnabled, setNextButtonDisabled] = useState(true);
 
   const [questionsAnswered, setQuestionsAnswered] = useState({});
   const [totalQuestions, setTotalQuestions] = useState(0);
@@ -19,6 +20,7 @@ const TestQuestions = ({ params, searchParams }) => {
     const nextIndex = (currentQuestionIndex + 1) % questions.length;
     setCurrentQuestionIndex(nextIndex);
     setCurrentQuestion(questions[nextIndex]);
+    setNextButtonDisabled(true);
   };
 
   const handlePreviousButtonClick = () => {
@@ -28,17 +30,18 @@ const TestQuestions = ({ params, searchParams }) => {
         : currentQuestionIndex - 1;
     setCurrentQuestionIndex(nextIndex);
     setCurrentQuestion(questions[nextIndex]);
+    setNextButtonDisabled(false);
   };
 
   const handleRadioClick = (e, answer, question) => {
-    
+  console.log(1)
     questionsAnswered[question.id] = {
-      result: answer.a_id == question.correctanswer,
+      result: answer.a_id == question.correctanswerjson,
       selectedAnswerId:answer.a_id
     };
     setQuestionsAnswered(questionsAnswered);
-
-    if (answer.a_id == question.correctanswer) {
+    setNextButtonDisabled(false);
+    if (answer.a_id == question.correctanswerjson) {
       e.target.after("Right");
       setTotalHits(totalHits+1);
     } else {
@@ -90,7 +93,7 @@ const TestQuestions = ({ params, searchParams }) => {
           Previous |
         </button>
         <button
-          disabled={currentQuestionIndex === questions.length - 1}
+          disabled={nextButtonEnabled || currentQuestionIndex === questions.length - 1 }
           onClick={handleNextButtonClick}
         >
           Next
