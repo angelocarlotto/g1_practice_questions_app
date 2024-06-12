@@ -47,7 +47,7 @@ const TestQuestions = ({ params, searchParams }) => {
         .filter((e) => e.question != null)
         .map((e) => e.question);
       setQuestions(qst);
-      setCurrentQuestion(qst[2]);
+      setCurrentQuestion(qst[0]);
     };
     fetchPosts();
   }, []);
