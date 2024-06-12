@@ -1,53 +1,41 @@
 "use client";
 import { useEffect, useState } from "react";
 import Question from "@components/Question";
-import { CgSmileSad, CgSmile } from "react-icons/cg";
 const TestQuestions = ({ params, searchParams }) => {
   const testId = params.id;
   const [test, setTest] = useState({});
   const [questions, setQuestions] = useState([]);
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState({});
-  const [nextButtonEnabled, setNextButtonDisabled] = useState(true);
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
 
   const [questionsAnswered, setQuestionsAnswered] = useState({});
-  const [totalQuestions, setTotalQuestions] = useState(0);
-  const [totalHits, setTotalHits] = useState(0);
-  const [totalErrors, setTotalErrors] = useState(0);
 
   const handleNextButtonClick = () => {
-    const nextIndex = (currentQuestionIndex + 1) % questions.length;
-    setCurrentQuestionIndex(nextIndex);
+    const nextIndex = questions.indexOf(currentQuestion) + 1;
     setCurrentQuestion(questions[nextIndex]);
-    setNextButtonDisabled(true);
+    setNextButtonDisabled(questionsAnswered[questions[nextIndex].id] == null);
   };
 
   const handlePreviousButtonClick = () => {
-    const nextIndex =
-      currentQuestionIndex === 0
-        ? questions.length - 1
-        : currentQuestionIndex - 1;
-    setCurrentQuestionIndex(nextIndex);
-    setCurrentQuestion(questions[nextIndex]);
+    const previousIndex = questions.indexOf(currentQuestion) - 1;
+    setCurrentQuestion(questions[previousIndex]);
     setNextButtonDisabled(false);
   };
 
   const handleRadioClick = (e, answer, question) => {
-  console.log(1)
-    questionsAnswered[question.id] = {
-      result: answer.a_id == question.correctanswerjson,
-      selectedAnswerId:answer.a_id
-    };
+    if (e.target.checked) {
+      questionsAnswered[question.id] = {
+        result: answer.a_id == question.correctanswerjson,
+        selectedAnswerId: answer.a_id,
+        countAnswerNeeded:question.correctanswerjson.length
+      };
+    } else {
+      delete questionsAnswered[question.id];
+    }
+    console.log(questionsAnswered);
     setQuestionsAnswered(questionsAnswered);
     setNextButtonDisabled(false);
-    if (answer.a_id == question.correctanswerjson) {
-      e.target.after("Right");
-      setTotalHits(totalHits+1);
-    } else {
-      e.target.after("Wrong");
-      setTotalErrors(totalErrors+1);
-    }
   };
 
   useEffect(() => {
@@ -59,41 +47,70 @@ const TestQuestions = ({ params, searchParams }) => {
         .filter((e) => e.question != null)
         .map((e) => e.question);
       setQuestions(qst);
-      setCurrentQuestion(qst[currentQuestionIndex]);
-
-      setTotalQuestions( qst.length);
-
+      setCurrentQuestion(qst[2]);
     };
-
     fetchPosts();
   }, []);
   return (
     <>
       <p>
-        Erros:{Math.round((totalErrors / totalQuestions) * 100, 2)}% Hits:
-        {Math.round((totalHits / totalQuestions) * 100, 2)}% Progress:
-        {Math.round(((totalHits + totalErrors) / totalQuestions) * 100, 2)}%
+        Erros:{" "}
+        {Math.round(
+          (Object.getOwnPropertyNames(questionsAnswered).filter(
+            (x) => questionsAnswered[x].result == false
+          ).length /
+            questions.length) *
+            100,
+          2
+        )}
+        % Hits:
+        {Math.round(
+          (Object.getOwnPropertyNames(questionsAnswered).filter(
+            (x) => questionsAnswered[x].result == true
+          ).length /
+            questions.length) *
+            100,
+          2
+        )}
+        % Progress:
+        {Math.round(
+          (Object.getOwnPropertyNames(questionsAnswered).length /
+            questions.length) *
+            100,
+          2
+        )}
+        %
       </p>
       {currentQuestion && (
         <Question
           key={currentQuestion.id}
-          index={currentQuestionIndex}
+          index={questions.indexOf(currentQuestion)}
           question={currentQuestion}
           exam={test}
           handleRadioClick={handleRadioClick}
-          isDisabled={questionsAnswered[currentQuestion.id]!=null}
-          selectedAnswerId={questionsAnswered[currentQuestion.id]==null?null:questionsAnswered[currentQuestion.id].selectedAnswerId}
+          isDisabled={
+            currentQuestion?.correctanswerjson?.length == 1 &&
+            questionsAnswered[currentQuestion.id] != null
+          }
+          selectedAnswerId={
+            questionsAnswered[currentQuestion.id] == null
+              ? null
+              : questionsAnswered[currentQuestion.id].selectedAnswerId
+          }
         />
       )}
       <div className="navigation">
         <button
-          disabled={currentQuestionIndex === 0}
+          disabled={questions.indexOf(currentQuestion) === 0}
           onClick={handlePreviousButtonClick}
         >
           Previous |
         </button>
         <button
-          disabled={nextButtonEnabled || currentQuestionIndex === questions.length - 1 }
+          disabled={
+            nextButtonDisabled ||
+            questions.indexOf(currentQuestion) === questions.length - 1
+          }
           onClick={handleNextButtonClick}
         >
           Next

@@ -43,7 +43,11 @@ const Question = ({
               <input
                 disabled={isDisabled}
                 defaultChecked={selectedAnswerId == ans.answer.id}
-                type="radio"
+                type={
+                  question?.correctanswerjson?.length == 1
+                    ? "radio"
+                    : "checkbox"
+                }
                 name={"question" + question.id}
                 onClick={(e) => {
                   handleRadioClick(e, ans, question);
@@ -51,9 +55,15 @@ const Question = ({
                 id={"answer" + question.id + ans.answer.id}
                 value={ans.answer.id}
               />{" "}
+              {question?.correctanswerjson == selectedAnswerId &&
+                selectedAnswerId == ans.answer.id && (
+                  <p style={{ color: "green", display: "inline" }}><CgSmile style={{display:"inline"}}/>Right</p>
+                )}
+              {selectedAnswerId!=null && question?.correctanswerjson != selectedAnswerId &&
+                selectedAnswerId == ans.answer.id && (
+                  <p style={{ color: "red", display: "inline" }}><CgSmileSad  style={{display:"inline"}}/>  Wrong</p>
+                )}
               <label htmlFor={"answer" + question.id + ans.answer.id}>
-
-
                 {ans.answer.text}
               </label>
             </li>
